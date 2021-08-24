@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
+
 import Contacts from "./components/Contacts";
 import Form from "./components/Form";
 import Filter from "./components/Filter";
@@ -13,32 +13,12 @@ class App extends Component {
       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
     filter: "",
-    name: "",
-    number: "",
   };
-
-  handleInput = (event) => {
-    const { name, value } = event.currentTarget;
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
+  forSubmitHandler = (data) => {
     this.setState((prevState) => ({
-      contacts: [
-        ...prevState.contacts,
-        {
-          name: this.state.name,
-          id: uuidv4(),
-          number: this.state.number,
-        },
-      ],
+      ...prevState.contacts,
+      data,
     }));
-    this.reset();
-  };
-
-  reset = () => {
-    this.setState({ name: "", number: "" });
   };
   getContacts = () => {
     const normalizedFilter = this.state.filter.toLowerCase();
@@ -51,12 +31,7 @@ class App extends Component {
     return (
       <div>
         <h1>Phonebook</h1>
-        <Form
-          onChange={this.handleInput}
-          inputName={this.state.name}
-          inputNum={this.state.number}
-          onSubmit={this.handleSubmit}
-        ></Form>
+        <Form Submit={this.forSubmitHandler}></Form>
         <h2>Contacts</h2>
         <Filter onChange={this.handleInput} value={this.state.filter}></Filter>
         <Contacts contactsItem={this.getContacts()}></Contacts>
