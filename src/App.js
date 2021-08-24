@@ -7,25 +7,31 @@ class App extends Component {
   state = {
     contacts: [],
     name: "",
+    number: "",
   };
 
   handleInput = (event) => {
-    this.setState({ name: event.target.value });
+    const { name, value } = event.currentTarget;
+    this.setState({ [name]: value });
   };
+
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
+    this.setState((prevState) => ({
       contacts: [
+        ...prevState.contacts,
         {
           name: this.state.name,
           id: uuidv4(),
+          number: this.state.number,
         },
       ],
-    });
+    }));
     this.reset();
   };
+
   reset = () => {
-    this.setState({ contacts: [], name: "" });
+    this.setState({ name: "", number: "" });
   };
 
   render() {
@@ -34,11 +40,12 @@ class App extends Component {
         <h1>Phonebook</h1>
         <Form
           onChange={this.handleInput}
-          inputValue={this.state.name}
+          inputName={this.state.name}
+          inputNum={this.state.number}
           onSubmit={this.handleSubmit}
         ></Form>
         <h2>Contacts</h2>
-        <Contacts></Contacts>
+        <Contacts contactsItem={this.state.contacts}></Contacts>
       </div>
     );
   }
