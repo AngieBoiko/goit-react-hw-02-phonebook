@@ -16,9 +16,11 @@ class App extends Component {
   };
   forSubmitHandler = (data) => {
     this.setState((prevState) => ({
-      ...prevState.contacts,
-      data,
+      contacts: [...prevState.contacts, data],
     }));
+  };
+  forInputChange = (data) => {
+    this.setState({ filter: data });
   };
   getContacts = () => {
     const normalizedFilter = this.state.filter.toLowerCase();
@@ -31,9 +33,9 @@ class App extends Component {
     return (
       <div>
         <h1>Phonebook</h1>
-        <Form Submit={this.forSubmitHandler}></Form>
+        <Form onSubmit={this.forSubmitHandler}></Form>
         <h2>Contacts</h2>
-        <Filter onChange={this.handleInput} value={this.state.filter}></Filter>
+        <Filter onChange={this.forInputChange}></Filter>
         <Contacts contactsItem={this.getContacts()}></Contacts>
       </div>
     );

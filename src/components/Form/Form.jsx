@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import propTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 
-class Form extends Component() {
+class Form extends Component {
   state = { name: "", number: "" };
   handleInput = (event) => {
     const { name, value } = event.currentTarget;
@@ -10,7 +10,7 @@ class Form extends Component() {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.Submit({
+    this.props.onSubmit({
       name: this.state.name,
       id: uuidv4(),
       number: this.state.number,
