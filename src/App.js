@@ -15,9 +15,16 @@ class App extends Component {
     filter: "",
   };
   forSubmitHandler = (data) => {
-    this.setState((prevState) => ({
-      contacts: [...prevState.contacts, data],
-    }));
+    const nameArray = this.state.contacts.map((item) => {
+      return item.name;
+    });
+    if (nameArray.includes(data.name)) {
+      window.alert(`${data.name} is already in contacts.`);
+    } else {
+      this.setState((prevState) => ({
+        contacts: [...prevState.contacts, data],
+      }));
+    }
   };
   forInputChange = (data) => {
     this.setState({ filter: data });
