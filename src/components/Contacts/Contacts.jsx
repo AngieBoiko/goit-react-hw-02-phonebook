@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import s from "./Contacts.module.css";
 
 class Contacts extends Component {
   handleClick = (id) => {
@@ -8,13 +9,17 @@ class Contacts extends Component {
   render() {
     const contacts = this.props.contactsItem;
     return (
-      <ul>
+      <ul className={s.contactsList}>
         {contacts.map((item) => (
-          <li key={item.id}>
-            <p>
+          <li key={item.id} className={s.contactsItem}>
+            <p className={s.contactsText}>
               {item.name}: {item.number}
             </p>
-            <button type="button" onClick={() => this.handleClick(item.id)}>
+            <button
+              className={s.contactsBtn}
+              type="button"
+              onClick={() => this.handleClick(item.id)}
+            >
               Delete
             </button>
           </li>
