@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
+import s from "./Form.module.css";
 
 class Form extends Component {
   state = { name: "", number: "" };
@@ -24,10 +25,11 @@ class Form extends Component {
   render() {
     const { name, number } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
+      <form onSubmit={this.handleSubmit} className={s.form}>
+        <label className={s.formLabel}>
           Name
           <input
+            className={s.formInput}
             value={name}
             onChange={this.handleInput}
             type="text"
@@ -37,9 +39,10 @@ class Form extends Component {
             required
           />
         </label>
-        <label>
+        <label className={s.formLabel}>
           Number
           <input
+            className={s.formInput}
             value={number}
             onChange={this.handleInput}
             type="tel"
@@ -49,9 +52,14 @@ class Form extends Component {
             required
           />
         </label>
-        <button type="submit">Add to contacts</button>
+        <button type="submit" className={s.formBtn}>
+          Add to contacts
+        </button>
       </form>
     );
   }
 }
 export default Form;
+Form.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

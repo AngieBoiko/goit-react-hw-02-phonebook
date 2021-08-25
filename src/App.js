@@ -14,6 +14,10 @@ class App extends Component {
     ],
     filter: "",
   };
+  handleInput = (event) => {
+    const { name, value } = event.currentTarget;
+    this.setState({ [name]: value });
+  };
   forSubmitHandler = (data) => {
     const nameArray = this.state.contacts.map((item) => {
       return item.name;
@@ -26,24 +30,31 @@ class App extends Component {
       }));
     }
   };
-  forInputChange = (data) => {
-    this.setState({ filter: data });
-  };
+
   getContacts = () => {
     const normalizedFilter = this.state.filter.toLowerCase();
     return this.state.contacts.filter((item) =>
       item.name.toLowerCase().includes(normalizedFilter)
     );
   };
-
+  deleteContact = (id) => {
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter((item) => item.id !== id),
+    }));
+  };
   render() {
+    const visibleContacts = this.getContacts();
+    const { filter } = this.state;
     return (
       <div>
         <h1>Phonebook</h1>
         <Form onSubmit={this.forSubmitHandler}></Form>
         <h2>Contacts</h2>
-        <Filter onChange={this.forInputChange}></Filter>
-        <Contacts contactsItem={this.getContacts()}></Contacts>
+        <Filter onChange={this.handleInput} value={filter}></Filter>
+        <Contacts
+          contactsItem={visibleContacts}
+          onClick={this.deleteContact}
+        ></Contacts>
       </div>
     );
   }
